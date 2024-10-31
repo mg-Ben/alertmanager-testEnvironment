@@ -1,0 +1,10 @@
+version: 0.0.1
+services:
+  alertmanager:
+    container_name: alertmanager
+    image: prom/alertmanager
+    ports:
+      - "${ALERTMANAGER_PORT}:9093"
+    volumes:
+      - "./config/:/config/"
+    command: --config.file=/config/alertmanager.yml --log.level=debug
