@@ -25,3 +25,8 @@ sudo bash alertmanager-start.sh
 ```shell
 sudo bash alarm-test.sh
 ```
+
+# Useful references
+- [Alertmanager configuration file](https://prometheus.io/docs/alerting/latest/configuration/#filepath)
+- [Alertmanager template configuration](https://prometheus.io/docs/alerting/latest/notifications/)
+- [Alertmanager API Specification](https://github.com/prometheus/alertmanager/blob/main/api/v2/openapi.yaml)
