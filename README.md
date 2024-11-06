@@ -26,7 +26,28 @@ sudo bash alertmanager-start.sh
 sudo bash alarm-test.sh
 ```
 
+# Others
+## How to create a notification template
+1. Create a folder inside `/config` directory
+2. Add a file with `.tmpl` extension, which is the format for Go templating system
+3. Reference that file in your `alertmanager.yml` configuration file. For instance:
+
+```YAML
+templates:
+  - '/config/templates/template.tmpl'
+```
+4. Inside `template.tmpl` you define some templates like `{{ define "<template_name>" }}...{{ end }}`. To see them, it is needed to reference the specific template to load in `alertmanager.yml`. For example:
+
+```YAML
+receivers:
+  - name: ...
+    email_configs:
+      - to: '...@gmail.com'
+        html: '{{ template "<template_name>" . }}'
+```
+
 # Useful references
-- [Alertmanager configuration file](https://prometheus.io/docs/alerting/latest/configuration/#filepath)
+- [Alertmanager configuration file](https://prometheus.io/docs/alerting/latest/configuration/)
 - [Alertmanager template configuration](https://prometheus.io/docs/alerting/latest/notifications/)
 - [Alertmanager API Specification](https://github.com/prometheus/alertmanager/blob/main/api/v2/openapi.yaml)
+- [Go templating system](https://pkg.go.dev/text/template)
