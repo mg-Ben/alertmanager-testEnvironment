@@ -27,9 +27,9 @@ sudo bash alarm-test.sh
 ```
 
 # Others
-## How to create a notification template
+## How to create and apply a notification template
 1. Create a folder inside `/config` directory
-2. Add a file with `.tmpl` extension, which is the format for Go templating system
+2. Add and create the template file with `.tmpl` extension, which is the format for Go templating system
 3. Reference that file in your `alertmanager.yml` configuration file. For instance:
 
 ```YAML
@@ -44,6 +44,31 @@ receivers:
     email_configs:
       - to: '...@gmail.com'
         html: '{{ template "<template_name>" . }}'
+```
+
+### How to create and apply a notification template subject
+On condition that you want to apply a custom subject for the received notification mail:
+1. Define it in the `.tmpl` file (that is being referenced from `alertmanager.yml`, specifically in the `templates:` section). For example:
+
+```.tmpl
+...
+{{ define "<my_mail_subject>" }}
+<My Subject>
+{{end}}
+...
+```
+
+2. Import the `<my_mail_subject>` in `alertmanager.yml` as a header for the mail notifications:
+
+```YAML
+receivers:
+  - name: ...
+    email_configs:
+      - to: '...@gmail.com'
+        headers:
+          subject: '{{ template "<my_mail_subject>" . }}'
+        html: '{{ template "<template_name>" . }}'
+        
 ```
 
 # Useful references
