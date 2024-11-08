@@ -71,6 +71,33 @@ receivers:
         
 ```
 
+### How to manually resolve alerts
+Whenever you POST alerts to Alertmanager, you can simulate the time instants _from_ and _to_ they are firing with `startsAt` and `endsAt` fields. For instance, you can create a test alert `alarm.json` like:
+
+```JSON
+{
+  "labels": {
+    "alertname": "test-alert"
+  },
+  "startsAt": "2024-11-05T10:02:40.544069-06:00",
+  "endsAt": "2024-12-05T10:02:40.544069-06:00"
+}
+```
+
+And that alert would be active (i.e. _Firing_) from `2024-11-05T10:02:40.544069-06:00` to `2024-12-05T10:02:40.544069-06:00`.
+
+However, to prevent it from firing until the `endsAt` date, you can manually resolve it through modifying the `endsAt` field to another past value and then POST the alert again to alertmanager with the same `labels`:
+
+```JSON
+{
+  "labels": {
+    "alertname": "test-alert"
+  },
+  "startsAt": "2024-11-05T10:02:40.544069-06:00",
+  "endsAt": "2024-11-05T10:03:40.544069-06:00"
+}
+```
+
 # Useful references
 - [Alertmanager configuration file](https://prometheus.io/docs/alerting/latest/configuration/)
 - [Alertmanager template configuration](https://prometheus.io/docs/alerting/latest/notifications/)
