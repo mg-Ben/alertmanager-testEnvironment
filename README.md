@@ -12,7 +12,21 @@ Once the gmail account has been created, follow [these steps](https://support.go
 
 # How to use
 1. Create a new directory called `./config/`
-1. Create file inside `./config/`: `./config/alertmanager.yml` and edit it as you want
+1. Create file inside `./config/`: `./config/alertmanager.yml` and edit it as you want with this template:
+```YAML
+global:
+  smtp_from: '<your@gmail.com>'
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_auth_username: '<your@gmail.com>'
+  smtp_auth_password: '<googleAppPassword>'
+  smtp_require_tls: true
+route:
+  receiver: Me
+receivers:
+  - name: Me
+    email_configs:
+      - to: '<your@gmail.com>'
+```
 2. Edit `.env.template`
 3. Start Alertmanager container:
 
@@ -20,8 +34,11 @@ Once the gmail account has been created, follow [these steps](https://support.go
 sudo bash alertmanager-start.sh
 ```
 
-4. Create an example alert in `alarm.json`
-5. Send that alert to your gmail account:
+4. Create an example alert in `alarm.json` with this template:
+```JSON
+[{"labels":{"alertname":"test1"}}, {"labels":{"alertname":"test2"}}, {"labels":{"alertname":"test3"}}...]
+```
+5. Send that/those alert(s) to your gmail account:
 
 ```shell
 sudo bash alarm-test.sh
