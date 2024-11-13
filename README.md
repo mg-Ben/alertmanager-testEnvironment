@@ -11,7 +11,8 @@ Requirements:
 Once the gmail account has been created, follow [these steps](https://support.google.com/mail/answer/185833?hl=es-419) on how to create an application password.
 
 # How to use
-1. Edit `alertmanager.yml`
+1. Create a new directory called `./config/`
+1. Create file inside `./config/`: `./config/alertmanager.yml` and edit it as you want
 2. Edit `.env.template`
 3. Start Alertmanager container:
 
@@ -28,15 +29,14 @@ sudo bash alarm-test.sh
 
 # Others
 ## How to create and apply a notification template
-1. Create a folder inside `/config` directory
-2. Add and create the template file with `.tmpl` extension, which is the format for Go templating system
-3. Reference that file in your `alertmanager.yml` configuration file. For instance:
+1. Add and create the template file with `.tmpl` extension where you want (e.g. you can create a folder inside `./config/`, like `./config/templates/` and create there your templates), which is the format for Go templating system
+2. Reference that file in your `alertmanager.yml` configuration file. For instance:
 
 ```YAML
 templates:
   - '/config/templates/template.tmpl'
 ```
-4. Inside `template.tmpl` you define some templates like `{{ define "<template_name>" }}...{{ end }}`. To see them, it is needed to reference the specific template to load in `alertmanager.yml`. For example:
+3. Inside `template.tmpl` you define some templates like `{{ define "<template_name>" }}...{{ end }}`. To see them, it is needed to reference the specific template to load in `alertmanager.yml`. For example:
 
 ```YAML
 receivers:
